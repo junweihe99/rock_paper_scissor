@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissor</title>
+</head>
+<body>
+    <script>
+        //Get a random integer between 0 and max
+        function getRandomInt(max){
+            return Math.floor(Math.random()*max);
+        }
+        
+        //Randomly pick between Rock, Paper or Scissor
+        function computerPlay(){
+            let random = getRandomInt(3);
+            if(random === 0)
+            {
+                return 'Rock';
+            }
+            else if(random === 1)
+            {
+                return 'Paper';
+            }
+            else{
+                return 'Scissor';
+            }
+        }
+        
+        //Simulate one round of rock,paper, returnscissor
+        function playRound(playerSelection, computerSelection){
+            //Generate computer's choice
+            computerSelection = computerPlay();
+            //Prompt player for their choice
+            playerSelection = prompt("Rock, Paper, Scissor? ");
+
+            //Convert input string into a standarized form with only first letter capitalized
+            playerSelection = playerSelection.toLowerCase();
+            playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
+
+            //Access win conditions
+            if(playerSelection === computerSelection)
+            {
+                return "It is a tie!";
+            }
+            else if((playerSelection === 'Rock' && computerSelection === 'Scissor') || (playerSelection === 'Paper' && computerSelection === 'Rock') || (playerSelection ==='Scissor' && computerSelection === 'Paper'))
+            {
+                return `You win! ${playerSelection} beats ${computerSelection}`;
+            }
+            else{
+                return `You lose! ${computerSelection} beats ${playerSelection}`;
+            }
+        }
+
+        //Simulate a Bo5 game of Rock, Paper, Scissor
+        function game()
+        {
+            //Score counters
+            let playerScore = 0;
+            let computerScore = 0; 
+
+            //Loop for 5 rounds
+            for(let i = 0; i<5; i++){
+                
+                //Play a round and display the result
+                let result = playRound();
+                console.log(result);
+                
+                let tie = result.search('tie');
+                let win = result.search('win');
+
+                //If round was a tie, add one more round to the loop, else add a point to the respective winner's score
+                if(tie != -1){
+                    i--;
+                }
+                else if(win!= -1){
+                    playerScore++;
+                }
+                else{
+                    computerScore++;
+                }
+
+                //If player wins 3 rounds, end the loop and declare player the winner
+                if(playerScore === 3){
+                    console.log("Player wins the game!");
+                    break;
+                }
+
+                //If computer wins 3 rounds, end the loop and declare computer the winner
+                if(computerScore ===3){
+                    console.log("Computer wins the game!");
+                    break;
+                }
+            }
+        }
+        game();
+    </script>
+</body>
+</html>
