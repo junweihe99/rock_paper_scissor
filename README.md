@@ -1,3 +1,3 @@
 # rock_paper_scissor
 
-For this project, I will be creating the basic game of rock, paper, scissor.
+For this project, I will be implementing a Bo5 game of Rock, Paper, Scissor.
