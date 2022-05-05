@@ -8,10 +8,14 @@
 </head>
 <body>
 
-    <div>Rock, Paper, Scissor?</div>
+    <div class ="Game">Rock, Paper, Scissor?</div>
     <button id="Rock">Rock</button>
     <button id="Paper">Paper</button>
     <button id="Scissor">Scissor</button>
+    <div class="Result"></div>
+    <div class="pScore"></div>
+    <div class="cScore"></div>
+
 
     <script>
 
@@ -39,7 +43,7 @@
         //Simulate one round of rock,paper, scissor
         function playRound(playerSelection, computerSelection){
 
-            //Access win conditions
+            //Assess win conditions
             if(playerSelection === computerSelection)
             {
                 return "It is a tie!";
@@ -53,60 +57,23 @@
             }
         }
 
-    /*
-        //Simulate a Bo5 game of Rock, Paper, Scissor
-        function game()
-        {
-            //Score counters
-            let playerScore = 0;
-            let computerScore = 0; 
-
-            //Loop for 5 rounds
-            for(let i = 0; i<5; i++){
-                
-                //Play a round and display the result
-                let result = playRound();
-                console.log(result);
-                
-                let tie = result.search('tie');
-                let win = result.search('win');
-
-                //If round was a tie, add one more round to the loop, else add a point to the respective winner's score
-                if(tie != -1){
-                    i--;
-                }
-                else if(win!= -1){
-                    playerScore++;
-                }        game();
-                else{
-                    computerScore++;
-                }
-
-                //If player wins 3 rounds, end the loop and declare player the winner
-                if(playerScore === 3){
-                    console.log("Player wins the game!");
-                    break;
-                }
-
-                //If computer wins 3 rounds, end the loop and declare computer the winner
-                if(computerScore ===3){
-                    console.log("Computer wins the game!");
-                    break;
-                }
-            }
-        }
-        game();
-    */
+        //Score Counters
         let playerScore = 0;
         let computerScore = 0;
+
+        //Every button click initiates a round of rps
         const buttons = document.querySelectorAll('button');
         buttons.forEach((button) => {
             button.addEventListener('click', () =>{
                 let result = playRound(button.id, computerPlay());
-                console.log(result);
+                
+                const roundResult = document.querySelector('.Result');
+                roundResult.textContent = `${result}`;
 
+                //Determine result of each round
                 let tie = result.search('tie');
                 let win = result.search('win');
+                //if game was a tie do nothing, else add a point to respective winner
                 if(tie !== -1)
                 {
                 }
@@ -118,18 +85,22 @@
                     computerScore++;
                 }
 
-                console.log(playerScore);
-                console.log(computerScore);
+                //display score at the end
+                const pScore = document.querySelector('.pScore');
+                const cScore = document.querySelector('.cScore');
+                pScore.textContent = `Player Score: ${playerScore}`;
+                cScore.textContent = `Computer Score: ${computerScore}`;
                 
+                //If player wins 3 rounds, declare Player the winner and reset score
                 if(playerScore === 3){
-                    console.log("Player wins the game!");
+                    roundResult.textContent = `${result}! Player wins the game!`;
                     playerScore = 0;
                     computerScore = 0;
                 }
 
-                //If computer wins 3 rounds, end the loop and declare computer the winner
+                //If computer wins 3 rounds, declare Computer the winner and reset score
                 if(computerScore ===3){
-                    console.log("Computer wins the game!");
+                    roundResult.textContent = `${result}! Computer wins the game!`;
                     playerScore = 0;
                     computerScore = 0;
                 }
