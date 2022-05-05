@@ -7,14 +7,27 @@
     <title>Rock Paper Scissor</title>
 </head>
 <body>
+
+    <div class ="Game">Rock, Paper, Scissor?</div>
+    <button id="Rock">Rock</button>
+    <button id="Paper">Paper</button>
+    <button id="Scissor">Scissor</button>
+    <div class="Result"></div>
+    <div class="pScore"></div>
+    <div class="cScore"></div>
+
+
     <script>
+
         //Get a random integer between 0 and max
-        function getRandomInt(max){
+        function getRandomInt(max)
+        {
             return Math.floor(Math.random()*max);
         }
 
         //Randomly pick between Rock, Paper or Scissor
-        function computerPlay(){
+        function computerPlay()
+        {
             let random = getRandomInt(3);
             if(random === 0)
             {
@@ -24,22 +37,15 @@
             {
                 return 'Paper';
             }
-            else{
+            else
+            {
                 return 'Scissor';
             }
         }
         
-        //Simulate one round of rock,paper, scissor
-        function playRound(playerSelection, computerSelection){
-            //Generate computer's choice
-            computerSelection = computerPlay();
-            //Prompt player for their choice
-            playerSelection = prompt("Rock, Paper, Scissor? ");
-
-            //Convert input string into a standarized form with only first letter capitalized
-            playerSelection = playerSelection.toLowerCase();
-            playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
-
+        //Simulate one round of rock,paper,scissor
+        function playRound(playerSelection, computerSelection)
+        {
             //Assess win conditions
             if(playerSelection === computerSelection)
             {
@@ -49,53 +55,62 @@
             {
                 return `You win! ${playerSelection} beats ${computerSelection}`;
             }
-            else{
+            else
+            {
                 return `You lose! ${computerSelection} beats ${playerSelection}`;
             }
         }
 
-        //Simulate a Bo5 game of Rock, Paper, Scissor
-        function game()
-        {
-            //Score counters
-            let playerScore = 0;
-            let computerScore = 0; 
+        //Score Counters
+        let playerScore = 0;
+        let computerScore = 0;
 
-            //Loop for 5 rounds
-            for(let i = 0; i<5; i++){
+        //Every button click initiates a round of rps
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', () =>{
+                let result = playRound(button.id, computerPlay());
                 
-                //Play a round and display the result
-                let result = playRound();
-                console.log(result);
-                
+                //display result of round
+                const roundResult = document.querySelector('.Result');
+                roundResult.textContent = `${result}`;
+
+                //Determine result of each round
                 let tie = result.search('tie');
                 let win = result.search('win');
-
-                //If round was a tie, add one more round to the loop, else add a point to the respective winner's score
-                if(tie != -1){
-                    i--;
+                //if game was a tie do nothing, else add a point to respective winner
+                if(tie !== -1)
+                {
                 }
-                else if(win!= -1){
+                else if( win != -1)
+                {
                     playerScore++;
                 }
                 else{
                     computerScore++;
                 }
 
-                //If player wins 3 rounds, end the loop and declare player the winner
+                //display score at the end
+                const pScore = document.querySelector('.pScore');
+                const cScore = document.querySelector('.cScore');
+                pScore.textContent = `Player Score: ${playerScore}`;
+                cScore.textContent = `Computer Score: ${computerScore}`;
+                
+                //If player wins 3 rounds, declare Player the winner and reset score
                 if(playerScore === 3){
-                    console.log("Player wins the game!");
-                    break;
+                    roundResult.textContent = `${result}! Player wins the game!`;
+                    playerScore = 0;
+                    computerScore = 0;
                 }
 
-                //If computer wins 3 rounds, end the loop and declare computer the winner
+                //If computer wins 3 rounds, declare Computer the winner and reset score
                 if(computerScore ===3){
-                    console.log("Computer wins the game!");
-                    break;
+                    roundResult.textContent = `${result}! Computer wins the game!`;
+                    playerScore = 0;
+                    computerScore = 0;
                 }
-            }
-        }
-        game();
-    </script>    
+            });
+        });
+    </script>
 </body>
 </html>
