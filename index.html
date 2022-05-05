@@ -29,7 +29,7 @@
             }
         }
         
-        //Simulate one round of rock,paper, returnscissor
+        //Simulate one round of rock,paper, scissor
         function playRound(playerSelection, computerSelection){
             //Generate computer's choice
             computerSelection = computerPlay();
@@ -40,7 +40,7 @@
             playerSelection = playerSelection.toLowerCase();
             playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
 
-            //Access win conditions
+            //Assess win conditions
             if(playerSelection === computerSelection)
             {
                 return "It is a tie!";
