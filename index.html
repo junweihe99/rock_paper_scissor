@@ -7,7 +7,14 @@
     <title>Rock Paper Scissor</title>
 </head>
 <body>
+
+    <div>Rock, Paper, Scissor?</div>
+    <button id="Rock">Rock</button>
+    <button id="Paper">Paper</button>
+    <button id="Scissor">Scissor</button>
+
     <script>
+
         //Get a random integer between 0 and max
         function getRandomInt(max){
             return Math.floor(Math.random()*max);
@@ -29,16 +36,8 @@
             }
         }
         
-        //Simulate one round of rock,paper, returnscissor
+        //Simulate one round of rock,paper, scissor
         function playRound(playerSelection, computerSelection){
-            //Generate computer's choice
-            computerSelection = computerPlay();
-            //Prompt player for their choice
-            playerSelection = prompt("Rock, Paper, Scissor? ");
-
-            //Convert input string into a standarized form with only first letter capitalized
-            playerSelection = playerSelection.toLowerCase();
-            playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1);
 
             //Access win conditions
             if(playerSelection === computerSelection)
@@ -54,6 +53,7 @@
             }
         }
 
+    /*
         //Simulate a Bo5 game of Rock, Paper, Scissor
         function game()
         {
@@ -77,7 +77,7 @@
                 }
                 else if(win!= -1){
                     playerScore++;
-                }
+                }        game();
                 else{
                     computerScore++;
                 }
@@ -96,6 +96,45 @@
             }
         }
         game();
-    </script>    
+    */
+        let playerScore = 0;
+        let computerScore = 0;
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', () =>{
+                let result = playRound(button.id, computerPlay());
+                console.log(result);
+
+                let tie = result.search('tie');
+                let win = result.search('win');
+                if(tie !== -1)
+                {
+                }
+                else if( win != -1)
+                {
+                    playerScore++;
+                }
+                else{
+                    computerScore++;
+                }
+
+                console.log(playerScore);
+                console.log(computerScore);
+                
+                if(playerScore === 3){
+                    console.log("Player wins the game!");
+                    playerScore = 0;
+                    computerScore = 0;
+                }
+
+                //If computer wins 3 rounds, end the loop and declare computer the winner
+                if(computerScore ===3){
+                    console.log("Computer wins the game!");
+                    playerScore = 0;
+                    computerScore = 0;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
