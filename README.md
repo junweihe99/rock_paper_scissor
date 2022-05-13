@@ -10,7 +10,7 @@ Rock_paper_scissor is a web recreation of the popular rock-paper-scissor game. T
   
 <h4>Challenges</h4>
   <ul>
-    <li>
+    <li> N/A
   </ul>
 
 
